@@ -1,5 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras import layers
+from tensorflow.keras.applications.efficientnet import preprocess_input
 
 
 IMAGE_HEIGHT = 224
@@ -44,11 +45,15 @@ data_augmentation = tf.keras.Sequential([
     layers.RandomTranslation(0.10, 0.10)
 ])
 
-normalization = layers.Rescaling(1./255)
+normalization = layers.Lambda(preprocess_input)
 
 AUTOTUNE = tf.data.AUTOTUNE
 
 
 def prepare_dataset(dataset):
 
-    return dataset.prefetch(buffer_size=AUTOTUNE)
+    return (
+        dataset
+        .cache()
+        .prefetch(AUTOTUNE)
+    )

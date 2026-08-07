@@ -1,0 +1,6 @@
+{
+    "model": "EfficientNetB0",
+    "framework": "TensorFlow",
+    "image_size": 224,
+    "num_classes": 10
+}

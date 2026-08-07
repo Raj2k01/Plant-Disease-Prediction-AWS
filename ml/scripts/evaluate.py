@@ -1,8 +1,7 @@
 import json
-from pathlib import Path
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 import seaborn as sns
 import tensorflow as tf
 
@@ -16,34 +15,30 @@ from preprocess import (
     prepare_dataset
 )
 
-DATASET_PATH = r"D:\MLPortfolioProjects\PlantDiseasePredictionDL\ml\data\tomato"
-
-MODEL_DIR = Path("../models")
-
-OUTPUT_DIR = Path("../outputs")
-
-OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+from config import *
 
 #Load Dataset
-print("Loading validation dataset")
-train_dataset, validation_dataset, class_names = load_dataset(DATASET_PATH)
+print("Evaluation Started")
+
+print(f"Dataset : {DATASET_DIR}")
+print(f"Model   : {BEST_MODEL_PATH}")
+print(f"Outputs : {OUTPUTS_DIR}")
+
+train_dataset, validation_dataset, class_names = load_dataset(DATASET_DIR)
+
 validation_dataset = prepare_dataset(validation_dataset)
 
 #Load Model
-print("Loading trained model...")
+print("\nLoading model")
 
-model = tf.keras.models.load_model(
-    MODEL_DIR / "best_model.keras"
-)
+model = tf.keras.models.load_model(BEST_MODEL_PATH)
 
 print("Model Loaded Successfully")
 
-#Predict
-
-print("Generating predictions...")
+#Prediction
+print("Generating predictions")
 
 y_true = []
-
 y_pred = []
 
 for images, labels in validation_dataset:
@@ -57,57 +52,45 @@ for images, labels in validation_dataset:
     y_pred.extend(predicted_labels)
 
 #Classification Report
-
 report = classification_report(
     y_true,
     y_pred,
-    target_names=class_names
+    target_names=class_names,
+    zero_division=0
 )
 
 print(report)
 
-with open(
-    OUTPUT_DIR / "classification_report.txt",
-    "w",
-    encoding="utf-8"
-) as f:
-
+with open(CLASSIFICATION_REPORT_PATH, "w", encoding="utf-8") as f:
     f.write(report)
 
 #Confusion Matrix
+cm = confusion_matrix(y_true, y_pred)
 
-cm = confusion_matrix(
-    y_true,
-    y_pred
-)
-
-#Plot Confusion Matrix
-plt.figure(figsize=(18,18))
+plt.figure(figsize=(12,10))
 
 sns.heatmap(
     cm,
+    annot=True,
+    fmt="d",
     cmap="Blues",
     xticklabels=class_names,
     yticklabels=class_names
 )
 
 plt.title("Confusion Matrix")
-
 plt.xlabel("Predicted")
-
 plt.ylabel("Actual")
 
 plt.tight_layout()
 
-plt.savefig(
-    OUTPUT_DIR / "confusion_matrix.png",
-    dpi=300
-)
+plt.savefig(CONFUSION_MATRIX_PATH, dpi=300)
 
-plt.show()
+plt.close()
+
+print("Confusion Matrix Saved")
 
 #Sample Predictions
-
 plt.figure(figsize=(12,12))
 
 for images, labels in validation_dataset.take(1):
@@ -116,14 +99,14 @@ for images, labels in validation_dataset.take(1):
 
     predicted = np.argmax(predictions, axis=1)
 
-    for i in range(9):
+    for i in range(min(9, len(images))):
 
-        ax = plt.subplot(3,3,i+1)
+        plt.subplot(3,3,i+1)
 
         plt.imshow(images[i].numpy().astype("uint8"))
 
         plt.title(
-            f"True: {class_names[labels[i]]}\nPred: {class_names[predicted[i]]}",
+            f"True : {class_names[labels[i]]}\nPred : {class_names[predicted[i]]}",
             fontsize=8
         )
 
@@ -131,28 +114,26 @@ for images, labels in validation_dataset.take(1):
 
 plt.tight_layout()
 
-plt.savefig(
-    OUTPUT_DIR / "sample_predictions.png",
-    dpi=300
-)
+plt.savefig(SAMPLE_PREDICTIONS_PATH, dpi=300)
 
-plt.show()
+plt.close()
+
+print("Sample Predictions Saved")
 
 #Save Metrics
-
 accuracy = np.mean(np.array(y_true) == np.array(y_pred))
 
 metrics = {
-    "accuracy": float(accuracy)
+
+    "model": MODEL_NAME,
+    "dataset": "PlantVillage Tomato",
+    "framework": "TensorFlow",
+    "accuracy": float(accuracy),
+    "num_classes": len(class_names)
 }
 
-with open(
-    OUTPUT_DIR / "metrics.json",
-    "w"
-) as f:
-
+with open(METRICS_PATH, "w") as f:
     json.dump(metrics, f, indent=4)
 
 print("Evaluation Completed Successfully")
-
-print(f"Accuracy : {accuracy:.4f}")
+print(f"Validation Accuracy : {accuracy:.4f}")

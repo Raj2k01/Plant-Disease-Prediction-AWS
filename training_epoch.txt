@@ -1,0 +1,56 @@
+1st run
+
+epoch 1 - val accuracy: 0.8117 - val loss: 0.6081 | learning rate: 0.0010
+epoch 2 - val accuracy: 0.8502 - val loss: 0.4759 | learning rate: 0.0010
+epoch 3 - val accuracy: 0.8689 - val loss: 0.4202 | learning rate: 0.0010
+epoch 4 - val accuracy: 0.8833 - val loss: 0.3694 | learning rate: 0.0010
+epoch 5 - val accuracy: 0.8868 - val loss: 0.3488 | learning rate: 0.0010
+
+epoch 6 - val accuracy: 0.8890 - val loss: 0.3376 | learning rate: 0.0010
+epoch 7 - val accuracy: 0.8945 - val loss: 0.3186 | learning rate: 0.0010
+epoch 8 - val accuracy: 0.8915 - val loss: 0.3242 | learning rate: 0.0010
+epoch 9 - val accuracy: 0.8998 - val loss: 0.2985 | learning rate: 0.0010
+epoch 10 - val accuracy: 0.9001 - val loss: 0.2983 | learning rate: 0.0010
+
+epoch 11 - val accuracy: 0.9025 - val loss: 0.2864 | learning rate: 0.0010
+epoch 12 - val accuracy: 0.8965 - val loss: 0.3000 | learning rate: 0.0010
+epoch 13 - val accuracy: 0.8937 - val loss: 0.2978 | learning rate: 0.0010
+epoch 14 - val accuracy: 0.9009 - val loss: 0.2810 | learning rate: 2.0000e-04
+epoch 15 - val accuracy: 0.9023 - val loss: 0.2759 | learning rate: 2.0000e-04
+
+
+
+
+
+2nd run
+
+epoch 1 - val accuracy: 0.8089 - val loss: 0.6194 | learning rate: 0.0010
+epoch 2 - val accuracy: 0.8464 - val loss: 0.4832 | learning rate: 0.0010
+epoch 3 - val accuracy: 0.8648 - val loss: 0.4140 | learning rate: 0.0010
+epoch 4 - val accuracy: 0.8800 - val loss: 0.3735 | learning rate: 0.0010
+epoch 5 - val accuracy: 0.8805 - val loss: 0.3542 | learning rate: 0.0010
+
+epoch 6 - val accuracy: 0.8855 - val loss: 0.3433 | learning rate: 0.0010
+epoch 7 - val accuracy: 0.8816 - val loss: 0.3398 | learning rate: 0.0010
+epoch 8 - val accuracy: 0.9019 - val loss: 0.2965 | learning rate: 0.0010
+
+best model saved to /models
+
+epoch 9 - val accuracy: 0.9020 - val loss: 0.2963 | learning rate: 0.0010
+epoch 10 - val accuracy: 0.9042 - val loss: 0.2874 | learning rate: 0.0010
+
+epoch 11 - val accuracy: 0.8956 - val loss: 0.3064 | learning rate: 0.0010
+epoch 12 - val accuracy: 0.8968 - val loss: 0.2961 | learning rate: 0.0010
+epoch 13 - val accuracy: 0.9069 - val loss: 0.2784 | learning rate: 0.0002
+epoch 14 - val accuracy: 0.9083 - val loss: 0.2739 | learning rate: 0.0002
+epoch 15 - val accuracy: 0.8117 - val loss: 0.6081 | learning rate: 0.0002
+
+fine tuning
+
+epoch 1 - val accuracy: 0.8888 - val loss: 0.3412 | learning rate: 0.00001
+epoch 2 - val accuracy: 0.8948 - val loss: 0.3135 | learning rate: 0.00001
+epoch 3 - val accuracy: 0.9050 - val loss: 0.2868 | learning rate: 0.00001
+epoch 4 - val accuracy: 0.9100 - val loss: 0.2642 | learning rate: 0.00001
+epoch 5 - val accuracy: 0.9149 - val loss: 0.2455 | learning rate: 0.00001
+
+artifacts saved
