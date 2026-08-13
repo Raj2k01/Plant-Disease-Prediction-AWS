@@ -127,7 +127,7 @@ function App() {
             </p>
 
             <div className="prediction">
-              {result.prediction}
+              {result.class_name}
             </div>
 
             <p>
