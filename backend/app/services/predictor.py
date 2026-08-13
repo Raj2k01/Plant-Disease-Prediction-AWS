@@ -1,40 +1,33 @@
 import json
+import os
 
-import numpy as np
-import tensorflow as tf
+import boto3
 
-from app.config import (
-    MODEL_PATH,
-    CLASS_NAMES_PATH
+
+REGION = os.getenv("AWS_REGION", "us-east-1")
+
+ENDPOINT_NAME = os.getenv(
+    "SAGEMAKER_ENDPOINT_NAME",
+    "plant-diesase-prediction-endpoint-v8" 
+)
+
+runtime = boto3.client(
+    "sagemaker-runtime",
+    region_name=REGION
 )
 
 
-print("Loading Model...")
+def predict(image_bytes, content_type="image/png"):
 
-model = tf.keras.models.load_model(MODEL_PATH)
+    response = runtime.invoke_endpoint(
+        EndpointName=ENDPOINT_NAME,
+        Body=image_bytes,
+        ContentType=content_type,
+        Accept="application/json"
+    )
 
-print("Model Loaded")
+    result = json.loads(
+        response["Body"].read().decode("utf-8")
+    )
 
-
-with open(CLASS_NAMES_PATH) as f:
-
-    CLASS_NAMES = json.load(f)
-
-
-def predict(image):
-
-    prediction = model.predict(
-        image,
-        verbose=0
-    )[0]
-
-    predicted_index = int(np.argmax(prediction))
-
-    confidence = float(prediction[predicted_index])
-
-    return {
-
-        "prediction": CLASS_NAMES[predicted_index],
-
-        "confidence": round(confidence, 4)
-    }
+    return result

@@ -1,9 +1,11 @@
-from pathlib import Path
+import os
 
-BASE_DIR = Path(__file__).resolve().parents[2]
+SAGEMAKER_ENDPOINT_NAME = os.getenv(
+    "SAGEMAKER_ENDPOINT_NAME",
+    "plant-disease-prediction-endpoint-v8"
+)
 
-MODEL_PATH = BASE_DIR / "ml" / "models" / "final_model.keras"
-
-CLASS_NAMES_PATH = BASE_DIR / "ml" / "models" / "class_names.json"
-
-IMAGE_SIZE = (224, 224)
+AWS_REGION = os.getenv(
+    "AWS_REGION",
+    "us-east-1"
+)

@@ -37,7 +37,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/predict",
+        "http://plant-disease-api-env.eba-2eajc9pt.us-east-1.elasticbeanstalk.com/predict",
         {
           method: "POST",
           body: formData,
@@ -108,7 +108,7 @@ function App() {
           onClick={handlePredict}
           disabled={loading || !selectedFile}
         >
-          {loading ? "Predicting..." : "Predict Disease"}
+          {loading ? "Predicting" : "Predict Disease"}
         </button>
 
         {error && (
